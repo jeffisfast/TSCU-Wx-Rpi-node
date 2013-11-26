@@ -9,7 +9,7 @@ import time
 import datetime
 import gspread
 import RPi.GPIO as GPIO
-from ../Adafruit-Raspberry-Pi-Python-Code/Adafruit_BMP085 import BMP085
+from Adafruit_BMP085 import BMP085
 
 # ===========================================================================
 # Google Account Details
@@ -53,7 +53,7 @@ while(True):
   # Run the DHT program to get the humidity and temperature readings! But first set our LEDs state...
   GPIO.output(RED_LED,True)
   GPIO.output(GREEN_LED, False)
-  output = subprocess.check_output(["./../Adafruit-Raspberry-Pi-Python-Code/Adafruit_DHT_Driver/Adafruit_DHT", "2302", "4"]);
+  output = subprocess.check_output(["./Adafruit_DHT", "2302", "4"]);
 
   matches = re.search("Temp =\s+([0-9.]+)", output)
   if (not matches):
@@ -83,14 +83,23 @@ while(True):
   print "BPM Pressure %.2f hPa" % bmppressure
   print "BPM Altitude %.2f" % bmpaltitude
 
+  # Get data from GPS
+  # This is coming...
+
+  gpsaltitude = 100
+  gpslatitude = 40.803775
+  gpslongitude = -73.966282
+  gpsvisiblesats = 20
+
   # Append the data in the spreadsheet, including a timestamp
   try:
-    values = [datetime.datetime.now(), temp, humidity, 29.92, temp, 182, 40.79795785051378, -73.9604622144127, 57, 22]
+    values = [datetime.datetime.now(), temp, humidity, bmppressure, bmptemp, bmpaltitude, gpslatitude, gpslongitude, gpsaltitude, gpsvisiblesats]
     worksheet.append_row(values)
   except:
     print "Unable to append data.  Check your connection?"
     sys.exit()
 
   # Wait 30 seconds before continuing
-  print "Wrote a row to %s" % spreadsheet
+  print "Posted: ",
+  print (values)
   time.sleep(60)
