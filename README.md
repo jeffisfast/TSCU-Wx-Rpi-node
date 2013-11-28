@@ -10,5 +10,5 @@ Basic setup information:
 3. Install the I2C stuff from Adafruit too.
 4. Install this git tree.
 5. Make symbolic links to Adafruit_BMP085.py, Adafruit_DHT, Adafruit_I2C.py as appropriate for your install locations.
-6. Adjust the credentials section in the code, if necessary.  Shame on me for leaving this as clear text. Must fix.
+6. Copy the config_example.py file to config.py and edit it to match your Google credentials.
 7. Use "sudo python TSCU_Wx.py" to run the code. 

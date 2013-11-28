@@ -1,0 +1,5 @@
+config.py
+*.pyc
+Adafruit_*.py
+Adafruit_DHT*
+
